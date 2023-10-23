@@ -1,0 +1,168 @@
+# 配置文件的内容都可以配置在阿波罗动态配置
+# 阿波罗配置
+#app:
+#  id: spring-mvc-jef
+#apollo:
+#  # 注册路径，阿波罗默认注册配置 Eureka
+#  meta: http://localhost:8080
+#  bootstrap:
+#    enabled: true
+#    # 指定阿波罗中配置项名称，多个用逗号隔开
+#    namespaces: application
+
+# 配置文件
+eureka:
+  client:
+    # 表示将自己注册进Eureka Server默认为true
+    register-with-eureka: true
+    # 是否从Eureka Server抓去已有的注册信息，默认是true
+    fetch-registry: true
+    # 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+
+spring:
+  thymeleaf:
+    # controller 返回 String 后跳转到指定界面时的路径前缀，下面路径的两个 / 都不能省略
+    prefix: classpath:/static/
+  mvc:
+    static-path-pattern: /**
+  resources:
+    # 静态资源的默认访问路径前缀
+    static-locations: classpath:/static
+  application:
+    name: cloud-payment-service
+  # 数据源基本配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/all_test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+  config:
+    import: nacos/message.yaml
+
+# 端口
+server:
+  port: 8001
+
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  # 所有entity别名类所在的包
+  type-aliases-pachage: com.jef.entity
+
+# 打印sql
+logging:
+  level:
+    com.jef.dao : debug
+
+dubbo:
+  application:
+    name: springboot-dubbo-demotest #应用名
+  registry:
+    #    address: zookeeper://127.0.0.1:2181 #zookeeper地址，启动zookeeper后使用这个
+    address: N/A #zookeeper地址
+    check: false
+  #   port: 2181 #提供注册的端口
+  # 采用协议方式和端口号
+  protocol:
+    name: dubbo # 采用dubbo协议
+    port: "20890"# dubbo服务暴露的端口
+  scan:
+    base-packages: com.jef.service.impl #扫描的实现类包名
+#  service:
+#    check: false
+#  reference:
+#    check: false
+#  config-center:
+#    timeout: 25000
+
+liteflow:
+#  #规则文件路径
+#  rule-source: config/*.el.yml
+#  #-----------------以下非必须-----------------
+#  #liteflow是否开启，默认为true
+#  enable: true
+#  #liteflow的banner打印是否开启，默认为true
+#  print-banner: true
+#  #zkNode的节点，只有使用zk作为配置源的时候才起作用，默认为/lite-flow/flow
+#  zk-node: /lite-flow/flow
+#  #上下文的最大数量槽，默认值为1024
+#  slot-size: 1024
+#  #FlowExecutor的execute2Future的线程数，默认为64
+#  main-executor-works: 64
+#  #FlowExecutor的execute2Future的自定义线程池Builder，LiteFlow提供了默认的Builder
+#  main-executor-class: com.yomahub.liteflow.thread.LiteFlowDefaultMainExecutorBuilder
+#  #自定义请求ID的生成类，LiteFlow提供了默认的生成类
+#  request-id-generator-class: com.yomahub.liteflow.flow.id.DefaultRequestIdGenerator
+#  #并行节点的线程池Builder，LiteFlow提供了默认的Builder
+#  thread-executor-class: com.yomahub.liteflow.thread.LiteFlowDefaultWhenExecutorBuilder
+#  #异步线程最长的等待时间(只用于when)，默认值为15000
+#  when-max-wait-time: 15000
+#  #异步线程最长的等待时间(只用于when)，默认值为MILLISECONDS，毫秒
+#  when-max-wait-time-unit: MILLISECONDS
+#  #when节点全局异步线程池最大线程数，默认为16
+#  when-max-workers: 16
+#  #when节点全局异步线程池等待队列数，默认为512
+#  when-queue-limit: 512
+#  #是否在启动的时候就解析规则，默认为true
+#  parse-on-start: true
+#  #全局重试次数，默认为0
+#  retry-count: 0
+#  #是否支持不同类型的加载方式混用，默认为false
+#  support-multiple-type: false
+#  #全局默认节点执行器
+#  node-executor-class: com.yomahub.liteflow.flow.executor.DefaultNodeExecutor
+#  #是否打印执行中过程中的日志，默认为true
+#  print-execution-log: true
+#  #是否开启本地文件监听，默认为false
+#  enable-monitor-file: false
+#  #简易监控配置选项
+#  monitor:
+#    #监控是否开启，默认不开启
+#    enable-log: false
+#    #监控队列存储大小，默认值为200
+#    queue-limit: 200
+#    #监控一开始延迟多少执行，默认值为300000毫秒，也就是5分钟
+#    delay: 300000
+#    #监控日志打印每过多少时间执行一次，默认值为300000毫秒，也就是5分钟
+#    period: 300000
+  rule-source-ext-data-map:
+    serverAddr: 127.0.0.1:8848
+    dataId: demo_rule
+    group: jef-application
+    namespace: dev
+    username: nacos
+    password: nacos
+
+
+rocketmq:
+  consumer:
+    group: springboot_consumer_group
+    # 一次拉取消息最大值，注意是拉取消息的最大值而非消费最大值
+    pull-batch-size: 10
+  name-server: 127.0.0.1:9876
+  producer:
+    # 发送同一类消息的设置为同一个group，保证唯一
+    group: springboot_producer_group
+    # 发送消息超时时间，默认3000
+    sendMessageTimeout: 10000
+    # 发送消息失败重试次数，默认2
+    retryTimesWhenSendFailed: 2
+    # 异步消息重试此处，默认2
+    retryTimesWhenSendAsyncFailed: 2
+    # 消息最大长度，默认1024 * 1024 * 4(默认4M)
+    maxMessageSize: 4096
+    # 压缩消息阈值，默认4k(1024 * 4)
+    compressMessageBodyThreshold: 4096
+    # 是否在内部发送失败时重试另一个broker，默认false
+    retryNextServer: false
+
+elasticsearch:
+  ip: 127.0.0.1
+  port: 9300
+  pool-size: 5
+  cluster:
+    name: elasticsearch
+  url: http://127.0.0.1:9200
+  username: # 不存在就留空
+  password:

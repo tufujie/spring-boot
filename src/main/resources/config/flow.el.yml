@@ -1,0 +1,12 @@
+flow:
+  nodes:
+    node:
+      - id: serviceA
+        class: com.jef.service.ACmp
+      - id: serviceB
+        class: com.jef.service.BCmp
+      - id: serviceC
+        class: com.jef.service.CCmp
+  chain:
+    - name: chain1
+      value: "THEN(serviceB, serviceC, serviceA)"

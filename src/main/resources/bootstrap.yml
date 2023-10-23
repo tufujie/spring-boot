@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: spring-nacos-service
+  cloud:
+    nacos:
+      config:
+        # :8848可以不用
+        server-addr: 127.0.0.1
+        # 用户名密码可不配置
+        #        username: nacos
+        #        password: nacos
+        # 区分环境：开发环境、测试环境、预发布环境、⽣产环境
+        namespace: dev
+        # 区分不同应⽤：同⼀个环境内，不同应⽤的配置，通过group来区分。
+        group: jef-application
+        shared-configs:
+          - dataId: message.yaml
+            # 如果Group不为空这边必须要写Group
+            group: jef-app
+            # 配置更新是否刷新本地缓存
+            refresh: true
+        # 是否启用，默认启用，如果不启用可以设置
+#        enabled: false
+        # 同步远程配置
+        enable-remote-sync-config: true
+        # 文件结尾
+        file-extension: yaml
