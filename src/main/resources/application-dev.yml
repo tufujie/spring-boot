@@ -52,7 +52,7 @@ spring:
 
 # 端口
 server:
-  port: 8001
+  port: 8080
 
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
