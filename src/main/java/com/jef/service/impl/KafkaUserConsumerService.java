@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
  * @date 2023/10/30
  */
 @Service
-public class UserConsumerService {
-    private final Logger logger = LoggerFactory.getLogger(UserProducerService.class);
+public class KafkaUserConsumerService {
+    private final Logger logger = LoggerFactory.getLogger(KafkaUserProducerService.class);
 
     @Value("${kafka.topic.my-topic}")
     private String myTopic;
@@ -26,7 +26,7 @@ public class UserConsumerService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    @KafkaListener(topics = {"${kafka.topic.my-topic}"}, groupId = "group1")
+    @KafkaListener(topics = {"${kafka.topic.my-topic}"}, groupId = "group1", id = "myListener1", autoStartup = "false")
     public void consumeMessage(ConsumerRecord<String, String> userConsumerRecord) {
         try {
             User book = objectMapper.readValue(userConsumerRecord.value(), User.class);
@@ -36,7 +36,7 @@ public class UserConsumerService {
         }
     }
 
-    @KafkaListener(topics = {"${kafka.topic.my-topic2}"}, groupId = "group2")
+    @KafkaListener(topics = {"${kafka.topic.my-topic2}"}, groupId = "group2", id = "myListener2", autoStartup = "false")
     public void consumeMessage2(User user) {
         logger.info("消费者消费{}的消息 -> {}", myTopic2, user.toString());
     }

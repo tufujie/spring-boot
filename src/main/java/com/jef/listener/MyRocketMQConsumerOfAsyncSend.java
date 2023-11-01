@@ -11,10 +11,10 @@ import java.util.Date;
  * @author tufujie
  * @date 2023/9/7
  */
-//@RocketMQMessageListener(topic = "topic_name_jef_test", consumerGroup = "topic_name_jef_test_Group")
+//@RocketMQMessageListener(topic = "topic_name_jef_test_asyncSend", consumerGroup = "topic_name_jef_test_asyncSend_Group")
 @Component
 @Slf4j
-public class MyConsumer implements RocketMQListener<String> {
+public class MyRocketMQConsumerOfAsyncSend implements RocketMQListener<String> {
 
     @Override
     public void onMessage(String message) {

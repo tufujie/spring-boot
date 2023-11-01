@@ -1,9 +1,11 @@
 package com.jef.controller;
 
 import com.jef.entity.User;
-import com.jef.service.impl.UserProducerService;
+import com.jef.service.impl.KafkaUserProducerService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +24,13 @@ public class KafkaController {
     String myTopic;
     @Value("${kafka.topic.my-topic2}")
     String myTopic2;
-    private final UserProducerService producer;
+    private final KafkaUserProducerService producer;
     private AtomicInteger atomicLong = new AtomicInteger();
 
-    KafkaController(UserProducerService producer) {
+    @Autowired
+    private KafkaListenerEndpointRegistry registry;
+
+    KafkaController(KafkaUserProducerService producer) {
         this.producer = producer;
     }
 
@@ -45,5 +50,28 @@ public class KafkaController {
             this.producer.sendMessage(myTopic2, new User(atomicLong.addAndGet(1), name));
         }
         return "success";
+    }
+
+    /**
+     * 开启监听
+     */
+    @GetMapping("/start")
+    public void start(@RequestParam String id) {
+        // 判断监听容器是否启动，未启动则将其启动
+        if (!registry.getListenerContainer(id).isRunning()) {
+            registry.getListenerContainer(id).start();
+        }
+        // 将其恢复
+        registry.getListenerContainer(id).resume();
+    }
+
+    /**
+     * 关闭监听
+     */
+    @GetMapping("/stop")
+    public void stop(@RequestParam String id) {
+        // 暂停监听
+//        registry.getListenerContainer(id).setAutoStartup(false);
+        registry.getListenerContainer(id).stop();
     }
 }

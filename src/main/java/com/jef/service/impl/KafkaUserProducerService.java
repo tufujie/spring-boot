@@ -12,13 +12,13 @@ import org.springframework.util.concurrent.ListenableFuture;
  * @date 2023/10/30
  */
 @Service
-public class UserProducerService {
+public class KafkaUserProducerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserProducerService.class);
+    private static final Logger logger = LoggerFactory.getLogger(KafkaUserProducerService.class);
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public UserProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
+    public KafkaUserProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
