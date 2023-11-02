@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfigura
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * 使用 @ServletComponentScan注解后，Servlet、Filter、Listener
@@ -43,6 +44,7 @@ import org.springframework.context.annotation.Configuration;
         MultipartAutoConfiguration.class,
         RedisReactiveAutoConfiguration.class
 })
+@EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 public class JefApplication {
 
     public static void main(String[] args) {
