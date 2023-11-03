@@ -44,6 +44,15 @@ public class LogAspectj {
     private static final Logger logger = LogManager.getLogger(LogAspectj.class);
 
     /**
+     * 权限管理
+     */
+    @Pointcut("execution(* com.jef.controller.*.*(..))")
+    public void userPermission() {
+    }
+
+    /**
+     * 用户日志记录
+     *
      * @Pointcut : 创建一个切点，方便同一方法的复用。
      * value属性就是AspectJ表达式，
      */
@@ -54,6 +63,10 @@ public class LogAspectj {
 
     @Pointcut("execution(* com.jef.dao.*.*(..))")
     public void sqlLog() {
+    }
+
+    @Pointcut("@annotation(org.springframework.transaction.annotation.Transactional)")
+    public void transactionalControl() {
     }
 
     @Pointcut("execution(* com.jef.controller.*.*(..))")
@@ -203,5 +216,17 @@ public class LogAspectj {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+
+    // 实际连接点方法
+    @Before("userPermission()")
+    public void userPermission(JoinPoint pj) {
+        System.out.println("权限控制");
+    }
+
+    @Before("transactionalControl()")
+    public void transactionalControl(JoinPoint pj) {
+        System.out.println("事务控制");
     }
 }

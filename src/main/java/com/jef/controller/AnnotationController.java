@@ -28,10 +28,16 @@ public class AnnotationController {
 
     @Autowired
     private List<IManyImplService> manyImplServiceList;
+    @Autowired
+    private IManyImplService manyImplServiceOne;
+    @Autowired
+    private IManyImplService manyImplServiceTwo;
 
     @ResponseBody
     @RequestMapping("/manyImpl")
     public String manyImpl() {
+        manyImplServiceOne.doSomething();
+        manyImplServiceTwo.doSomething();
         return "实现类数量=" + manyImplServiceList.size();
     }
 
