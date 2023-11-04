@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @ResponseBody
     @RequestMapping("/getAllUser")
@@ -64,7 +68,11 @@ public class UserController {
         }
         User user = User.getBasicUser();
         request.getSession().setAttribute(jssssionId, user);
-        return "success";
+        // 分布式Session
+        redisTemplate.opsForValue().set(jssssionId, JSONObject.toJSONString(user));
+        String userJson = redisTemplate.opsForValue().get(jssssionId);
+        User userRedis = JSONObject.parseObject(userJson, User.class);
+        return userRedis.getName();
     }
 
     @ResponseBody
