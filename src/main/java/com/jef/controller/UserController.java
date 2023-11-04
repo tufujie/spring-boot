@@ -48,22 +48,45 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/getCookie")
     public String getCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie cookie = request.getCookies()[0];
-        return cookie.getValue();
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (BasicConstant.USER_NAME_KEY.equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        System.out.println("cookies.length = " + cookies.length);
+        String jssssionId = null;
+        for (Cookie cookie : cookies) {
+            if ("JSESSIONID".equals(cookie.getName())) {
+                System.out.println("JSESSIONID=" + cookie.getValue());
+                jssssionId = cookie.getValue();
+            }
+        }
+        User user = User.getBasicUser();
+        request.getSession().setAttribute(jssssionId, user);
+        return "success";
     }
 
     @ResponseBody
     @RequestMapping("/setSession")
     public String setSession(HttpServletRequest request, HttpServletResponse response) {
-        User user = User.getBasicUser();
-        request.getSession().setAttribute(BasicConstant.USER_NAME_KEY, user);
+        // 调用getSession后会产生一个key为JSESSIONID的Cookie，所以要先产生这个Cookie，然后在获取Cookie
+        request.getSession();
         return "success";
     }
 
     @ResponseBody
     @RequestMapping("/getSession")
     public String getSession(HttpServletRequest request, HttpServletResponse response) {
-        User user = (User) request.getSession().getAttribute(BasicConstant.USER_NAME_KEY);
+        Cookie[] cookies = request.getCookies();
+        String jssssionId = null;
+        for (Cookie cookie : cookies) {
+            if ("JSESSIONID".equals(cookie.getName())) {
+                System.out.println("JSESSIONID=" + cookie.getValue());
+                jssssionId = cookie.getValue();
+            }
+        }
+        User user = (User) request.getSession().getAttribute(jssssionId);
         return JSONObject.toJSONString(user);
     }
 
