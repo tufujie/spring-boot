@@ -11,14 +11,14 @@ import java.util.Date;
  * @author tufujie
  * @date 2023/9/7
  */
-//@RocketMQMessageListener(topic = "topic_name_jef_test", consumerGroup = "topic_name_jef_test_Group")
+//@RocketMQMessageListener(topic = "topic_name_jef_test", consumerGroup = "topic_name_jef_test_Group2")
 @Component
 @Slf4j
-public class MyRocketMQConsumer implements RocketMQListener<String> {
+public class MyRocketMQConsumerTwo implements RocketMQListener<String> {
 
     @Override
     public void onMessage(String message) {
         // 处理消息的逻辑
-        log.info("消费者1号，当前时间：{}收到消息: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date()), message);
+        log.info("消费者2号，当前时间：{}收到消息: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date()), message);
     }
 }

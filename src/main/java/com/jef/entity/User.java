@@ -1,5 +1,7 @@
 package com.jef.entity;
 
+import com.jef.constant.BasicConstant;
+
 import java.io.Serializable;
 
 /**
@@ -125,5 +127,9 @@ public class User implements Serializable {
 
     public void setDescrription(String descrription) {
         this.descrription = descrription;
+    }
+
+    public static User getBasicUser() {
+        return new User(20, BasicConstant.USER_NAME);
     }
 }
