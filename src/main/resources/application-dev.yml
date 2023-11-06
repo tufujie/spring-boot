@@ -93,20 +93,20 @@ spring:
     # 默认数据源，未分片的表默认执行库
     sharding:
       default-data-source-name: ds-0
-      ### 分库策略
-      # 分库分片健
+      # 分库策略
       tables:
         t_order:
           database-strategy:
             standard:
+              # 分库分片健
               sharding-column: order_id
               # 分库分片算法
               precise-algorithm-class-name: com.jef.common.sharding.MyDBPreciseShardingAlgorithm
 
-            # 分表策略
-            # 分表分片健
+          # 分表策略
           table-strategy:
             standard:
+              # 分表分片健
               sharding-column: order_id
               # 分表算法
               precise-algorithm-class-name: com.jef.common.sharding.MyTablePreciseShardingAlgorithm
