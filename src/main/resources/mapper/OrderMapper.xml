@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jef.dao.IOrderDao">
+    <select id="getByID" resultType="com.jef.entity.Order" parameterType="java.lang.Long">
+        select order_id orderId, order_no orderNo, user_id userId
+        from t_order
+        where order_id = #{id}
+    </select>
+
+</mapper>

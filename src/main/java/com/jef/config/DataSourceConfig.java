@@ -1,3 +1,4 @@
+/*
 package com.jef.config;
 
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
@@ -11,17 +12,21 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+*/
 /**
  * @author Jef
  * @date 2021/3/19
- */
+ *//*
+
 @Configuration
 @EnableConfigurationProperties(DataSourceProperties.class)
 public class DataSourceConfig {
     @Autowired
     ApplicationContext context;
+*/
 /*    @Autowired
-    private org.springframework.cloud.context.scope.refresh.RefreshScope refreshScope;*/
+    private org.springframework.cloud.context.scope.refresh.RefreshScope refreshScope;*//*
+
 
     @ApolloConfigChangeListener
     private void onChange(ConfigChangeEvent changeEvent) {
@@ -40,3 +45,4 @@ public class DataSourceConfig {
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
 }
+*/
