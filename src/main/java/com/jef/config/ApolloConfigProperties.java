@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/11/1
  */
 @Configuration
-@EnableConfigurationProperties(ConfigProperties.class)
+@EnableConfigurationProperties(ApolloConfigProperties.class)
 @ConfigurationProperties(prefix = "config")
 @Setter
 @Getter
 @RefreshScope
-public class ConfigProperties {
+public class ApolloConfigProperties {
     private int configValue;
 }

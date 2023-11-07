@@ -19,4 +19,5 @@ public interface IUserDao extends IBaseDao {
 
     User getByUser(User user);
 
+    void updateById(User user);
 }

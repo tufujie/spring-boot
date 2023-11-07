@@ -14,19 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringBootApolloRefreshConfig {
 
-    private final ConfigProperties configProperties;
+    private final ApolloConfigProperties apolloConfigProperties;
     private final RefreshScope refreshScope;
 
-    public SpringBootApolloRefreshConfig(ConfigProperties configProperties, RefreshScope refreshScope) {
-        this.configProperties = configProperties;
+    public SpringBootApolloRefreshConfig(ApolloConfigProperties apolloConfigProperties, RefreshScope refreshScope) {
+        this.apolloConfigProperties = apolloConfigProperties;
         this.refreshScope = refreshScope;
     }
 
     // interestedKeyPrefixes = {"key_prefix"}
     @ApolloConfigChangeListener(value = {"namespace"}, interestedKeys = {"key_prefix.key"})
     public void onChange(ConfigChangeEvent changeEvent) {
-        log.info("before refresh {}", configProperties.toString());
+        log.info("before refresh {}", apolloConfigProperties.toString());
         refreshScope.refresh("configProperties");
-        log.info("after refresh {}", configProperties.toString());
+        log.info("after refresh {}", apolloConfigProperties.toString());
     }
 }

@@ -9,5 +9,10 @@
         where name = #{name}
           and phone = #{phone}
     </select>
+    <update id="updateById" parameterType="com.jef.entity.User">
+        update user
+        set name = #{name}
+        where id = #{id}
+    </update>
 
 </mapper>

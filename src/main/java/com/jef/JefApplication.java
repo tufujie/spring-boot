@@ -1,5 +1,6 @@
 package com.jef;
 
+import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -35,6 +36,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @MapperScan("com.jef.dao") //扫描的mapper
 @EnableDubbo(scanBasePackages = {"com.jef.service.impl*"})
+@EnableAutoDataSourceProxy
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
         ActiveMQAutoConfiguration.class,

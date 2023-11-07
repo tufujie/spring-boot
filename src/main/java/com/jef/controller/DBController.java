@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -49,6 +50,15 @@ public class DBController {
     public String testShardingTable() {
         Order order = orderDao.getByID(1L);
         return order == null ? "error" : "订单号=" + order.getOrderNo();
+    }
+
+    @ResponseBody
+    @RequestMapping("/testDistributedTransactional")
+    public String testDistributedTransactional(@RequestParam Long id) {
+        User user = User.getBasicUser();
+        user.setId(id);
+        userService.updateById(user);
+        return "success";
     }
 
 }
