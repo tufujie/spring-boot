@@ -119,7 +119,7 @@ spring:
     allow-circular-references: true
 # 端口
 server:
-  port: 8080
+  port: 80
 
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
@@ -309,3 +309,14 @@ seata:
     #      name: file.conf
     type: file  # file、nacos 、apollo、zk、consul、etcd3
 
+wx:
+  login:
+    appid: wx307***a9cd3
+    appsecret: 84cffb43ab***25585a41deeeef2
+    token: weixin
+    server: http://192.168.3.***
+    qrCodeUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=wx_login#wechat_redirect
+    tokenUrl: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+    openIdUrl: https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=APPSECRET&code=CODE&grant_type=authorization_code
+    userInfoUrl: https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+    showqrcode: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=TICKET
