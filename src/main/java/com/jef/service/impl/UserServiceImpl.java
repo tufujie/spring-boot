@@ -4,7 +4,7 @@ import com.jef.dao.IUserDao;
 import com.jef.entity.User;
 import com.jef.service.IUserService;
 
-import io.seata.spring.annotation.GlobalTransactional;
+//import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
         return userDao.getByUser(user);
     }
 
-    @GlobalTransactional
+//    @GlobalTransactional
     @Override
     public void updateById(User user) {
         userDao.updateById(user);

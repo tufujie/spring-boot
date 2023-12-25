@@ -1,12 +1,15 @@
-package com.jef.service;
+/*
+package com.jef.service.liteflow;
 
 import com.yomahub.liteflow.core.NodeBreakComponent;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author tufujie
  * @date 2023/8/22
- */
+ *//*
+
 @Component("breakCmpA")
 public class BreakCmpA extends NodeBreakComponent {
     int i = 0;
@@ -17,3 +20,4 @@ public class BreakCmpA extends NodeBreakComponent {
         return i++ > 5;
     }
 }
+*/

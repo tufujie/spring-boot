@@ -1,12 +1,15 @@
-package com.jef.service;
+/*
+package com.jef.service.liteflow;
 
 import com.yomahub.liteflow.core.NodeIfComponent;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author tufujie
  * @date 2023/8/22
- */
+ *//*
+
 @Component("ifCmpA")
 public class IfCmpA extends NodeIfComponent {
     @Override
@@ -15,3 +18,4 @@ public class IfCmpA extends NodeIfComponent {
         return true;
     }
 }
+*/

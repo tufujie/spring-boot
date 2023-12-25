@@ -1,12 +1,15 @@
-package com.jef.service;
+/*
+package com.jef.service.liteflow;
 
 import com.yomahub.liteflow.core.NodeWhileComponent;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author tufujie
  * @date 2023/8/22
- */
+ *//*
+
 @Component("whileCmpA")
 public class WhileCmpA extends NodeWhileComponent {
     int i = 0;
@@ -17,3 +20,4 @@ public class WhileCmpA extends NodeWhileComponent {
         return i++ < 5;
     }
 }
+*/

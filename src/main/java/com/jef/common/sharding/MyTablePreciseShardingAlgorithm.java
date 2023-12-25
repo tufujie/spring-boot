@@ -26,7 +26,7 @@ public class MyTablePreciseShardingAlgorithm implements PreciseShardingAlgorithm
         String value = shardingValue.getValue() % tableNames.size() + "";
         for (String tableName : tableNames) {
             if (tableName.endsWith(value)) {
-                System.out.println("开始doShardingTable,tableName=" + tableName);
+                System.out.println("开始doShardingTable，tableName=" + tableName);
                 return tableName;
             }
         }

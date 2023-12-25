@@ -1,20 +1,8 @@
 package com.jef.controller;
 
 
-import com.jef.constant.CommonConstant;
-import com.jef.entity.User;
-import com.jef.service.BCmp;
-import com.jef.util.ThreadLocalUtil;
-import com.yomahub.liteflow.core.FlowExecutor;
-import com.yomahub.liteflow.core.FlowExecutorHolder;
-import com.yomahub.liteflow.flow.LiteflowResponse;
-import com.yomahub.liteflow.property.LiteflowConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 /**
  * @author Jef
@@ -23,7 +11,7 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/liteFlow")
 public class LiteFlowController {
-    @Resource
+    /*@Resource
     private FlowExecutor flowExecutor;
 
     @ResponseBody
@@ -142,5 +130,5 @@ public class LiteFlowController {
             thread1.start();
         }
         return "success";
-    }
+    }*/
 }

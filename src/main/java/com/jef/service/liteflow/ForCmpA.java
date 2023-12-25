@@ -1,12 +1,15 @@
-package com.jef.service;
+/*
+package com.jef.service.liteflow;
 
 import com.yomahub.liteflow.core.NodeForComponent;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author tufujie
  * @date 2023/8/22
- */
+ *//*
+
 @Component("forCmpA")
 public class ForCmpA extends NodeForComponent {
     @Override
@@ -15,3 +18,4 @@ public class ForCmpA extends NodeForComponent {
         return 3;
     }
 }
+*/

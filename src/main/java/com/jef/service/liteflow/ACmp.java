@@ -1,4 +1,5 @@
-package com.jef.service;
+/*
+package com.jef.service.liteflow;
 
 import com.jef.dao.IUserDao;
 import com.jef.entity.User;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+*/
 /**
  * @author tufujie
  * @date 2023/8/16
- */
+ *//*
+
 @Component("serviceA")
 public class ACmp extends NodeComponent {
 
@@ -34,3 +37,4 @@ public class ACmp extends NodeComponent {
         ThreadLocalUtil.removeThreadLocalName();
     }
 }
+*/
