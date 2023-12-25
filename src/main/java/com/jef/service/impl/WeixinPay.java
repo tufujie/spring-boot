@@ -1,6 +1,9 @@
 package com.jef.service.impl;
 
+import com.jef.constant.PayTypeEnum;
+import com.jef.dao.IOrderDao;
 import com.jef.service.IPay;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,6 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeixinPay implements IPay {
 
+    @Autowired
+    private IOrderDao orderDao;
+
     @Override
     public void pay() {
         System.out.println("weixinPay start");
@@ -17,6 +23,6 @@ public class WeixinPay implements IPay {
 
     @Override
     public String type() {
-        return "weixin";
+        return PayTypeEnum.WEIXIN.getType();
     }
 }
