@@ -43,7 +43,10 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     producer: # producer 生产者
-      retries: 0 # 重试次数
+      retries: 3 # 重试次数
+      retry:
+        backoff:
+          ms: 1000 # 重试间隔，默认是100毫秒
       acks: 1 # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
       batch-size: 16384 # 批量大小
       buffer-memory: 33554432 # 生产端缓冲区大小
