@@ -1,8 +1,15 @@
 package com.jef.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+import com.jef.config.KafkaConfig;
 import com.jef.entity.User;
 import com.jef.service.impl.KafkaUserProducerService;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
@@ -11,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PreDestroy;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * @author Jef
  * @date 2023/10/30
@@ -18,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/kafka")
 public class KafkaController {
+    private static final Logger logger = LogManager.getLogger(KafkaController.class);
+
     @Value("${kafka.topic.my-topic}")
     String myTopic;
     @Value("${kafka.topic.my-topic2}")
@@ -26,6 +38,11 @@ public class KafkaController {
 
     @Autowired
     private KafkaListenerEndpointRegistry registry;
+
+    @Autowired
+    private KafkaConfig kafkaConfig;
+
+    private AtomicBoolean isRunning = new AtomicBoolean(true);
 
     KafkaController(KafkaUserProducerService producer) {
         this.producer = producer;
@@ -45,6 +62,15 @@ public class KafkaController {
         // 1个topic一个分区，顺序发送和消费
         for (int i = 0; i < 10; i++) {
             this.producer.sendMessage(myTopic2, JSONObject.toJSONString(new User(i, name)));
+        }
+        return "success";
+    }
+
+    @GetMapping(value = "/sendMessageToKafkaTopic")
+    public String sendMessageToKafkaTopic(String topic, @RequestParam("name") String name) {
+        // 1个topic一个分区，顺序发送和消费
+        for (int i = 0; i < 10; i++) {
+            this.producer.sendMessage(topic, JSONObject.toJSONString(new User(i, name)));
         }
         return "success";
     }
@@ -70,5 +96,37 @@ public class KafkaController {
         // 暂停监听
 //        registry.getListenerContainer(id).setAutoStartup(false);
         registry.getListenerContainer(id).stop();
+    }
+
+    @GetMapping("/pollMessage")
+    public String pollMessage(@RequestParam String topic, @RequestParam String groupId) {
+        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(kafkaConfig.consumerConfigs(groupId));
+        kafkaConsumer.subscribe(Lists.newArrayList(topic));
+        ConsumerRecords<String, String> records = kafkaConsumer.poll(5000);
+        if (records.isEmpty()) {
+            return "noMessage";
+        }
+        // 处理消息
+        processRecords(kafkaConsumer, records);
+        // 手动提交
+        kafkaConsumer.commitSync();
+        return "success";
+    }
+
+    @PreDestroy
+    void close() {
+        logger.info("释放资源");
+        isRunning.set(false);
+    }
+
+    private void processRecords(KafkaConsumer<String, String> kafkaConsumer, ConsumerRecords<String, String> records) {
+        for (ConsumerRecord<String, String> record : records) {
+            try {
+                logger.info("获取消息成功：topic==>{}, partition==>{}, offset==>{}, message==>{}",
+                        record.topic(), record.partition(), record.offset(), record.value());
+                // doSomething with record
+            } catch (Exception e) {
+            }
+        }
     }
 }
