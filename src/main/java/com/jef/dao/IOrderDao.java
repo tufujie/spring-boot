@@ -1,7 +1,6 @@
 package com.jef.dao;
 
 import com.jef.entity.Order;
-
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface IOrderDao extends IBaseDao {
 
     Order getByID(Long id);
+
+    boolean insert(Order order);
 
 }

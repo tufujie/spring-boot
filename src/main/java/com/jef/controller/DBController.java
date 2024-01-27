@@ -1,11 +1,10 @@
 package com.jef.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jef.dao.IOrderDao;
 import com.jef.entity.Order;
 import com.jef.entity.User;
 import com.jef.service.IUserService;
-
-import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +38,37 @@ public class DBController {
     }
 
     @ResponseBody
-    @RequestMapping("/testShardingDB")
-    public String testShardingDB() {
-        Order order = orderDao.getByID(1L);
-        return order == null ? "error" : "订单号=" + order.getOrderNo();
+    @RequestMapping("/testShardingDBAndTableInsert")
+    public String testShardingDBAndTableInsert(@RequestParam Long orderId, @RequestParam String orderNo,
+                                               @RequestParam Long userId) {
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setOrderNo(orderNo);
+        order.setUserId(userId);
+        boolean success = false;
+        String errorMessage = "";
+        try {
+            success = orderDao.insert(order);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        return success ? "订单id=" + order.getOrderId() :
+                "error insert orderId " + orderId + " errorMessage" + errorMessage;
     }
 
     @ResponseBody
-    @RequestMapping("/testShardingTable")
-    public String testShardingTable() {
-        Order order = orderDao.getByID(1L);
-        return order == null ? "error" : "订单号=" + order.getOrderNo();
+    @RequestMapping("/testShardingDBAndTableGet")
+    public String testShardingDBAndTableGet(@RequestParam Long orderId) {
+        Order order = orderDao.getByID(orderId);
+        return order == null ? "error get orderId " + orderId : "订单号=" + order.getOrderNo();
+    }
+
+    @ResponseBody
+    @RequestMapping("/testGetDBAndTable")
+    public String testGetDBAndTable(@RequestParam Long orderId) {
+        int dbIndex = (int) (orderId % 2);
+        int tableIndex = (int) (orderId % 3);
+        return "ds_" + dbIndex + ".t_order_" + tableIndex;
     }
 
     @ResponseBody

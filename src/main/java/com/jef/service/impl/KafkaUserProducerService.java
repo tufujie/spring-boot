@@ -23,7 +23,7 @@ public class KafkaUserProducerService {
     }
 
     public void sendMessage(String topic, Object o) {
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, o);
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, null, o);
         future.addCallback(result -> logger.info("生产者成功发送消息：topic:{} partition:{} offest:{} message:{}",
                         result.getRecordMetadata().topic(), result.getRecordMetadata().partition(),
                         result.getRecordMetadata().offset(), o),

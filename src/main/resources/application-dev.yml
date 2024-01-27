@@ -84,14 +84,14 @@ spring:
       ds-0:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ds-0?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        url: jdbc:mysql://localhost:3306/ds_0?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
         username: root
         password: Root@123
       # 配置数据源 ds-1
       ds-1:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ds-1?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        url: jdbc:mysql://localhost:3306/ds_1?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
         username: root
         password: Root@123
     # 默认数据源，未分片的表默认执行库
@@ -116,7 +116,7 @@ spring:
               precise-algorithm-class-name: com.jef.common.sharding.MyTablePreciseShardingAlgorithm
 
             # 配置分片表 t_order
-            # 指定真实数据节点
+            # 指定真实数据节点，2库，每个库3个表
           actual-data-nodes: ds-$->{0..1}.t_order_$->{0..2}
   # 中断循环依赖
   main:

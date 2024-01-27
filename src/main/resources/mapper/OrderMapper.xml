@@ -6,5 +6,8 @@
         from t_order
         where order_id = #{id}
     </select>
+    <insert id="insert" parameterType="com.jef.entity.Order">
+        insert into t_order(order_id, order_no, user_id) values (#{orderId}, #{orderNo}, #{userId})
+    </insert>
 
 </mapper>
